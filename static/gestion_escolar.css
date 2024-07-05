@@ -1,0 +1,91 @@
+header{
+    background-color: #3D6198;
+    color: white;
+    font-family: DM Sans, sans-serif;
+    padding: 10px 100px;
+}
+.titulo{
+    padding: 10px 0;
+}
+body{
+    background: #43506C;
+}
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.opciones-nav{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.tablas{
+    width: 90%;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.btn{
+    background: transparent;
+    color: white;
+    font-size: 18px;
+}
+.tabla{
+    margin-top: 20px;
+    width: 90%;
+    text-align: center;
+    border: 0.5px solid transparent;
+    background: #E9E9EB;
+    border-radius: 8px;
+}
+thead{
+    border-radius: 8px;
+}
+tbody{
+    border: 0.5px solid transparent;
+}
+th{
+    justify-content: space-between;
+    padding: 10px 0;
+    font-size: 17px;
+    font-weight: 500;
+}
+.data-head{
+    padding: 10px 2px;
+    background-color: #EF484C;
+    color: white;
+    border: 1px solid transparent;
+}
+.informacion-tabla{
+    color: black;
+    padding: 10px 50px;
+    font-size: 15px;
+    text-align: center;
+    background: #E9E9EB;
+}
+tr{
+    border-radius: 8px;
+}   
+.tabla tr:hover{
+    cursor: pointer;
+    background: #B9B9BB;
+}
+a{
+    background: transparent;
+    text-decoration: none;
+    color: white;
+}
+form{
+    background: transparent;
+}
+button{
+    background: transparent;
+    border: none;
+    color: white;
+}
+.pdf_download{
+    color: #641FBB;
+    text-decoration: underline;
+}

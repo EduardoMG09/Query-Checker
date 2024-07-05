@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumno</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='reset.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='personalities.css') }}">
+</head>
+<body>
+    <!-- Encabezado -->
+    <header class="header">
+        <h1 class="asignatura">UPIITA</h1>
+        <form action="/cerrarsesion" method="post">
+            <button class="btn-cerrarsesion" type="submit">Cerrar Sesión</button>
+        </form>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Barra lateral -->
+            <nav class="col-md-3 col-lg-2 d-md-block sidebar" id="sidebar">
+                <button class="btn btn-primary" id="sidebarToggleBtn"><i class="bi bi-list"></i></button>
+                <div class="position-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Perfil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Configuración</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Contenido principal -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="pt-3 pb-2 mb-3">
+                    <h1>Tareas</h1>
+                    <h2>Trabajos en clase</h2>
+                </div>
+
+                <div id="seccionTareas" class="card">
+                    <h2>Tareas Asignadas</h2>
+                    <ul>
+                        {% for tarea in tareas %}
+                            <li><div class="info-tarea">{{ tarea.Titulo }} - {{ tarea.Descripcion }} - {{ tarea.Fecha }}</div>
+                                <form action="/entregar_tarea" method="post" enctype="multipart/form-data" style="display:inline;">
+                                    <div class="opcion_de_entrega">
+                                        Opcion de entrega: 
+                                        <select name="opcion_de_entregar">
+                                            <option value="Archivo">Archivo</option>
+                                            <option value="Script">Script</option>
+                                        </select>
+                                    </div>                        
+                                    <div class="container">
+                                        <div>
+                                            <input type="hidden" name="tarea_id" value="{{ tarea.TareaID }}">
+                                        </div>
+                                        <div>    
+                                            <input type="file" name="archivo">
+                                        </div>
+                                    </div>
+                                    <div class="container">
+                                        <div>Script:    
+                                            <select name="script">
+                                                <option value="">seleccione una opcion</option>
+                                                <option value="SELECT" class="tipo_consulta">SELECT</option>
+                                                <option value="DELETE" class="tipo_consulta">DELETE</option>
+                                                <option value="DROP TABLE" class="tipo_consulta">DROP TABLE</option>
+                                                <option value="INNER JOIN" class="tipo_consulta">INNER JOIN</option>
+                                                <option value="UPDATE" class="tipo_consulta">UPDATE</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            Atributos:
+                                            <input type="text" name='tablas' class="input-atributos" placeholder="Escribe tus atributos, de lo contrario escribe *">
+                                        </div>
+                                        <div>
+                                            Operacion:
+                                            <select name="script2">
+                                                <option value="" class="resto-consulta">seleccione una opcion</option>
+                                                <option value="FROM" class="resto-consulta">FROM</option>
+                                                <option value="SET" class="resto-consulta">SET</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            Nombre de tu tabla:
+                                            <input type="text" name='input-tablas'class='input-tablas' placeholder="Nombre de tu tabla">
+                                        </div>
+                                        <div>
+                                            Condicionales:
+                                            <select name="script3">
+                                                <option value="" class="condicional-script">seleccione una opcion</option>
+                                                <option value="WHERE" class="condicional-script">WHERE</option>
+                                                <option value="INNER JOIN" class="condicional-script">INNER JOIN</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            Condiciones:
+                                            <input type="text" name="condi" class="input-atributos" placeholder="condiciones con IN, AND, OR, etc">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div>
+                                            <button type="submit" class="btn-entregar">Entregar</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div><br>
+
+                <div id="seccionPracticas" class="card">
+                    <h2>Prácticas Asignadas</h2>
+                    <ul>
+                        {% for practica in practicas %}
+                            <li>{{ practica.Titulo }} - {{ practica.Descripcion }} - {{ practica.Fecha }}
+                                <form action="/entregar_practica" method="post" enctype="multipart/form-data" style="display:inline;">
+                                    <input type="hidden" name="practica_id" value="{{ practica.PracticaID }}">
+                                    <input type="file" name="archivo" required>
+                                    <button type="submit" class="btn-entregar">Entregar</button>
+                                </form>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div><br>
+
+                <div id="seccionPublicaciones" class="card">
+                    <h2>Publicaciones Recientes</h2>
+                    <ul>
+                        {% for pub in publicacion %}
+                            <li>{{ pub.Titulo }} - {{ pub.Descripcion }} - {{ pub.Fecha }}</li>
+                        {% endfor %}
+                    </ul>
+                </div><br>
+            </main>
+        </div>
+    </div>
+
+    <!-- Scripts de Bootstrap (jQuery y Popper.js) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.min.js"></script>
+
+    <!-- Script personalizado para mostrar/ocultar la barra lateral -->
+    <script src="alumno.js"></script>
+
+
+</body>
+</html>
